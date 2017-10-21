@@ -1,5 +1,6 @@
 package com.google.amitnsky.bookfinder;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -23,6 +24,7 @@ public class SearchActivity extends AppCompatActivity {
         });
     }
     private void startLoadingBooks(String toSearch){
-        setContentView(R.layout.activity_search);
+        Intent intent = new Intent(SearchActivity.this,BookList.class);
+        startActivity(intent);
     }
 }

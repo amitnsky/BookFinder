@@ -21,6 +21,7 @@ public class Book {
 
     public String getTitle() {
         return mTitle;
+
     }
 
     public String getAuthor() {
@@ -38,6 +39,7 @@ public class Book {
     public String getInfoLink() {
         return mInfoLink;
     }
+
 
 
 }
