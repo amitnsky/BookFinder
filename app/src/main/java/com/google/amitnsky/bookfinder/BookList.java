@@ -19,9 +19,9 @@ public class BookList extends AppCompatActivity implements LoaderManager.LoaderC
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book_list);
-        String searched  = getIntent().getCharSequenceExtra(SearchActivity.QUERY_KEY).toString();
+        String searched = getIntent().getCharSequenceExtra(SearchActivity.QUERY_KEY).toString();
         Bundle bundle = new Bundle(1);
-        bundle.putString(SearchActivity.QUERY_KEY,searched);
+        bundle.putString(SearchActivity.QUERY_KEY, searched);
         getSupportLoaderManager().initLoader(0, bundle, this).forceLoad();
     }
 
@@ -43,7 +43,7 @@ public class BookList extends AppCompatActivity implements LoaderManager.LoaderC
     @Override
     public Loader<ArrayList<Book>> onCreateLoader(int id, Bundle args) {
 
-        return new BookAsyncLoader(getApplicationContext(),args.getString(SearchActivity.QUERY_KEY));
+        return new BookAsyncLoader(getApplicationContext(), args.getString(SearchActivity.QUERY_KEY));
     }
 
     @Override
@@ -52,8 +52,8 @@ public class BookList extends AppCompatActivity implements LoaderManager.LoaderC
             updateUI(data);
     }
 
+    //onLoaderreset set data field that is Books ArrayList null.
     @Override
     public void onLoaderReset(Loader<ArrayList<Book>> loader) {
-
     }
 }
