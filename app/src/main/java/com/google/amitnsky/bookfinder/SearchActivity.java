@@ -10,7 +10,7 @@ import android.widget.EditText;
 public class SearchActivity extends AppCompatActivity {
 public static final String QUERY_KEY = "QUERY_KEY";
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
         final EditText search_keyword_view = (EditText) findViewById(R.id.search_text_view);
