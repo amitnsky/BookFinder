@@ -39,11 +39,10 @@ public class QueryUtils {
         try {
             httpURLConnection = (HttpURLConnection) url.openConnection();
             httpURLConnection.setConnectTimeout(20000);
-
             httpURLConnection.setReadTimeout(20000);
             httpURLConnection.setRequestMethod("GET");
             httpURLConnection.connect();
-            if (httpURLConnection.getResponseCode() == 200 ){
+            if (httpURLConnection.getResponseCode() == 200) {
                 inputStream = httpURLConnection.getInputStream();
                 jsonResponse = readFromStream(inputStream);
             }
@@ -60,13 +59,14 @@ public class QueryUtils {
     /**
      * information from a jsonSring returned by makehttpreq is paresed
      * new books are added in arraylist
+     *
      * @param searchKey
      * @return book arraylist
      */
     public ArrayList<Book> extractInformation(String searchKey) {
         String jsonString = makeHttpRequest(searchKey);
         ArrayList<Book> books = new ArrayList<>();
-        String title, infolink, author;
+        String title, infolink, author="";
         int ratingCount;
         float rating;
         try {
@@ -74,21 +74,26 @@ public class QueryUtils {
             JSONArray items = jsonObject.getJSONArray("items");
             JSONObject volume = null;
             JSONObject item = null;
-            for (int i = 0; i < 10; i++) {
+            int i=0;
+            while (i<items.length()-1) {
                 item = items.getJSONObject(i);
                 volume = item.getJSONObject("volumeInfo");
                 title = volume.getString("title");
-                author = volume.getJSONArray("authors").getString(0);
+                if (volume.has("authors"))
+                    author = volume.getJSONArray("authors").getString(0);
                 infolink = volume.getString("infoLink");
-                if (volume.has("ratingsCount")){
+                if (volume.has("ratingsCount")) {
                     ratingCount = volume.getInt("ratingsCount");
                     rating = (float) volume.getLong("averageRating");
-                }
-                else{
+                } else {
+                    //provide default value as for some books these fields are not avail.
+                    //you may also use method setVisibility gone for views
+                    //which does nt hv item.
                     ratingCount = 25;
                     rating = 3.5f;
                 }
                 books.add(new Book(title, author, rating, ratingCount, infolink));
+                i++;
             }
 
         } catch (JSONException e) {
@@ -104,7 +109,7 @@ public class QueryUtils {
      */
     private String readFromStream(InputStream inputStream) throws IOException {
         StringBuilder result = new StringBuilder();
-        if (inputStream != null){
+        if (inputStream != null) {
             InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
             BufferedReader reader = new BufferedReader(inputStreamReader);
             String line = reader.readLine();
@@ -129,6 +134,7 @@ public class QueryUtils {
         }
         //final string of url
         String urlString = BASE_URL_STRING + keyString;
+        urlString += "&maxResults=25";
         URL url = null;
         try {
             url = new URL(urlString);

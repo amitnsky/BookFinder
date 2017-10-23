@@ -18,9 +18,10 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 public class BookList extends AppCompatActivity implements LoaderManager.LoaderCallbacks<ArrayList<Book>> {
-    ListView mListView;
-    BookAdapter mAdapter;
-    TextView mLoadingStatusTextView;
+    private ListView mListView;
+    private BookAdapter mAdapter;
+    private TextView mLoadingStatusTextView;
+    private ArrayList<Book> mBooks;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,15 +64,15 @@ public class BookList extends AppCompatActivity implements LoaderManager.LoaderC
     /**
      * Helper method to update UI,set up adapter.
      *
-     * @param books arraylist
+     * @param mBooks arraylist
      */
-    private void updateUI(final ArrayList<Book> books) {
-        mAdapter = new BookAdapter(getApplicationContext(), R.layout.list_item, books);
+    private void updateUI() {
+        mAdapter = new BookAdapter(getApplicationContext(), R.layout.list_item, mBooks);
         mListView.setAdapter(mAdapter);
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(books.get(position).getInfoLink()));
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(mBooks.get(position).getInfoLink()));
                 if (intent.resolveActivity(getPackageManager()) != null) {
                     startActivity(intent);
                 }
@@ -86,13 +87,15 @@ public class BookList extends AppCompatActivity implements LoaderManager.LoaderC
 
     @Override
     public void onLoadFinished(Loader<ArrayList<Book>> loader, ArrayList<Book> data) {
-        if (data != null) {
-            updateUI(data);
+        if (mBooks == null) {
+            mBooks = data;
+            updateUI();
         }
     }
 
     //onLoaderreset set data field that is Books ArrayList null.
     @Override
     public void onLoaderReset(Loader<ArrayList<Book>> loader) {
+        mBooks = null;
     }
 }

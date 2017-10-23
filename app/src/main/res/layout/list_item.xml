@@ -2,57 +2,72 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingRight="8dp"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:paddingRight="8dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
+        <RatingBar
+            android:id="@+id/rating_bar_view"
+            style="@android:style/Widget.Material.RatingBar.Small"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerInParent="true"
+            android:numStars="5"
+            android:rating="2.5"
+            android:stepSize=".1" />
+
         <TextView
-            android:paddingLeft="16dp"
             android:id="@+id/title_text_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
+            android:layout_centerInParent="true"
+            android:layout_toLeftOf="@id/rating_bar_view"
+            android:maxLines="1"
+            android:paddingLeft="16dp"
             android:text="Let us C"
-            android:textAlignment="center"
+            android:textAppearance="@android:style/TextAppearance.Medium"
             android:textColor="@android:color/black" />
 
-        <TextView
-            android:id="@+id/rating_text_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:text="4.5"
-            android:textAlignment="center" />
 
     </RelativeLayout>
 
     <RelativeLayout
+
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="2dp"
         android:layout_marginBottom="4dp"
+        android:layout_marginTop="2dp"
         android:orientation="horizontal">
 
         <TextView
-            android:paddingLeft="16dp"
-            android:id="@+id/author_text_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:text="YashWant P Kanetkar"
-            android:textAlignment="center" />
-
-        <TextView
             android:id="@+id/rating_count_text_view"
+
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:text="43"
-            android:textAlignment="center" />
+            android:textAlignment="center"
+            android:textAppearance="@android:style/TextAppearance.Small"
+            android:textColor="#78909C" />
+
+        <TextView
+            android:id="@+id/author_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_toLeftOf="@id/rating_count_text_view"
+            android:paddingLeft="16dp"
+            android:text="YashWant P Kanetkar"
+            android:textAppearance="@android:style/TextAppearance.Small"
+            android:textColor="#78909C" />
+
 
     </RelativeLayout>
+
 </LinearLayout>

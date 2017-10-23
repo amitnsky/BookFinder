@@ -18,18 +18,8 @@ public class BookAsyncLoader extends AsyncTaskLoader<ArrayList<Book>> {
         mSearchString = searchString;
     }
 
-
-    @Override
-    public void deliverResult(ArrayList<Book> data) {
-        super.deliverResult(data);
-    }
-
     @Override
     protected void onStartLoading() {
-        // If we currently have a result available, deliver itimmediately.
-        if (mBooks != null) {
-            deliverResult(mBooks);
-        }
         if (mBooks == null)
             forceLoad();
     }

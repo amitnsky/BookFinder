@@ -6,11 +6,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 public class SearchActivity extends AppCompatActivity {
-public static final String QUERY_KEY = "QUERY_KEY";
+    public static final String QUERY_KEY = "QUERY_KEY";
+
     @Override
-    protected void onCreate(Bundle savedInstanceState){
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
         final EditText search_keyword_view = (EditText) findViewById(R.id.search_text_view);
@@ -19,13 +21,17 @@ public static final String QUERY_KEY = "QUERY_KEY";
             @Override
             public void onClick(View v) {
                 String searchKeyword = search_keyword_view.getText().toString();
-                startLoadingBooks(searchKeyword);
+                if (searchKeyword.equals("")) {
+                    Toast.makeText(getApplicationContext(), "Enter a Valid name!", Toast.LENGTH_SHORT).show();
+                } else
+                    startLoadingBooks(searchKeyword);
             }
         });
     }
-    private void startLoadingBooks(String toSearch){
-        Intent intent = new Intent(SearchActivity.this,BookList.class);
-        intent.putExtra(QUERY_KEY,toSearch);
+
+    private void startLoadingBooks(String toSearch) {
+        Intent intent = new Intent(SearchActivity.this, BookList.class);
+        intent.putExtra(QUERY_KEY, toSearch);
         startActivity(intent);
     }
 }
