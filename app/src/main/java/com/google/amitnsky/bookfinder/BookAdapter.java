@@ -40,7 +40,7 @@ public class BookAdapter extends ArrayAdapter<Book> {
         mRatingTV = (TextView) rootView.findViewById(R.id.rating_text_view);
         mRatingCountTV = (TextView) rootView.findViewById(R.id.rating_count_text_view);
         //set corresponding views at root
-        final Book currentBook = getItem(position);
+        Book currentBook = getItem(position);
         mTitleTV.setText(currentBook.getTitle());
         mAuthorTV.setText(currentBook.getAuthor());
         mRatingCountTV.setText(Integer.toString(currentBook.getRatingCount()));

@@ -1,21 +1,55 @@
 package com.google.amitnsky.bookfinder;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import java.util.ArrayList;
 
-public class BookList extends AppCompatActivity {
+public class BookList extends AppCompatActivity implements LoaderManager.LoaderCallbacks<ArrayList<Book>> {
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book_list);
-        final ArrayList<Book> books = new ArrayList<>();
-        books.add(new Book("Let Us C", "Yashwant Kanetkar", 4.3f, 45, "google.com"));
+        getSupportLoaderManager().initLoader(0, null, this).forceLoad();
+    }
+
+    private void updateUI(final ArrayList<Book> books) {
         ListView listView = (ListView) findViewById(R.id.book_list_view);
         BookAdapter adapter = new BookAdapter(getApplicationContext(), R.layout.list_item, books);
         listView.setAdapter(adapter);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(books.get(position).getInfoLink()));
+                if (intent.resolveActivity(getPackageManager()) != null) {
+                    startActivity(intent);
+                }
+            }
+        });
+    }
+
+    @Override
+    public Loader<ArrayList<Book>> onCreateLoader(int id, Bundle args) {
+        return new BookAsyncLoader(getApplicationContext());
+    }
+
+    @Override
+    public void onLoadFinished(Loader<ArrayList<Book>> loader, ArrayList<Book> data) {
+        if (data != null)
+            updateUI(data);
+    }
+
+    @Override
+    public void onLoaderReset(Loader<ArrayList<Book>> loader) {
+
     }
 }

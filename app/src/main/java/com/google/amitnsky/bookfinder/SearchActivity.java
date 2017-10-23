@@ -8,7 +8,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 public class SearchActivity extends AppCompatActivity {
-
+public static final String QUERY_KEY = "QUERY_KEY";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,6 +25,7 @@ public class SearchActivity extends AppCompatActivity {
     }
     private void startLoadingBooks(String toSearch){
         Intent intent = new Intent(SearchActivity.this,BookList.class);
+        intent.putExtra(QUERY_KEY,toSearch);
         startActivity(intent);
     }
 }
